@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="kr" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>profile</title>
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet"/>
+</head>
+<body>
+<div class="card" style="width: 18rem;" th:object="${user}">
+    <img th:src="*{profileImageUrl}" class="card-img-top" alt="유저 프로필 사진" src="/static/image/kakao_login_button.png">
+    <div class="card-body">
+        <h5 class="card-text" th:text="*{nickname}">Card title</h5>
+    </div>
+</div>
+</body>
+</html>

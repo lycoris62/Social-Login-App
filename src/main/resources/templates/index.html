@@ -3,8 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <title>Home</title>
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet"/>
 </head>
 <body>
-    <h1 th:text="|Hello World ${name}!|">Hello World!</h1>
+<a th:href="|https://kauth.kakao.com/oauth/authorize?client_id=${@environment.getProperty('kakao.user_id')}&redirect_uri=${@environment.getProperty('kakao.redirect_url')}&response_type=code|">
+    <img th:src="@{/image/kakao_login_button.png}" src="/image/kakao_login_button.png" alt="카카오 로그인 버튼">
+</a>
 </body>
 </html>

@@ -1,21 +1,37 @@
 package lycoris62.socialLoginApp.controller;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import lycoris62.socialLoginApp.dto.MemberDto;
+import lycoris62.socialLoginApp.service.KakaoLoginService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+
+import java.util.Optional;
 
 @Slf4j
 @Controller
+@RequiredArgsConstructor
 public class LoginController {
 
+    private final KakaoLoginService kakaoLoginService;
+
     @GetMapping("/")
-    public String home(@RequestParam String name, Model model) {
-        if (name == null) {
-            name = "java";
-        }
-        model.addAttribute("name", name);
+    public String home() {
         return "index";
+    }
+
+    @RequestMapping("/login")
+    public String login(@RequestParam String code, Model model) {
+        log.info("loginCode={}", code);
+        Optional<MemberDto> optionalMemberDto = kakaoLoginService.kakaoLogin(code);
+        if (optionalMemberDto.isPresent()) {
+            model.addAttribute("user", optionalMemberDto.get());
+            return "profile";
+        }
+        return "redirect:/";
     }
 }
