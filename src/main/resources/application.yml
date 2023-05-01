@@ -1,3 +1,8 @@
 kakao:
-  user_id: ${user_id}
-  redirect_url: ${redirect_url}
+  user_id: ${KAKAO_USER_ID}
+  redirect_url: ${KAKAO_REDIRECT_URL}
+
+naver:
+  client_id: ${NAVER_CLIENT_ID}
+  client_secret: ${NAVER_CLIENT_SECRET}
+  redirect_url: ${NAVER_REDIRECT_URL}
