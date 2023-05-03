@@ -1,8 +1,14 @@
-kakao:
-  user_id: ${KAKAO_USER_ID}
-  redirect_url: ${KAKAO_REDIRECT_URL}
-
-naver:
-  client_id: ${NAVER_CLIENT_ID}
-  client_secret: ${NAVER_CLIENT_SECRET}
-  redirect_url: ${NAVER_REDIRECT_URL}
+oauth:
+  kakao:
+    client-id: ${KAKAO_USER_ID}
+    url:
+      auth: https://kauth.kakao.com
+      api: https://kapi.kakao.com
+      redirect-url: ${KAKAO_REDIRECT_URL}
+  naver:
+    secret: ${NAVER_CLIENT_SECRET}
+    client-id: ${NAVER_CLIENT_ID}
+    url:
+      auth: https://nid.naver.com
+      api: https://openapi.naver.com
+      redirect-url: ${NAVER_REDIRECT_URL}

@@ -6,12 +6,12 @@
     <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet"/>
 </head>
 <body>
-<a th:href="|https://kauth.kakao.com/oauth/authorize?client_id=${@environment.getProperty('kakao.user_id')}&redirect_uri=${@environment.getProperty('kakao.redirect_url')}&response_type=code|">
+<a th:href="|https://kauth.kakao.com/oauth/authorize?client_id=${@environment.getProperty('oauth.kakao.client-id')}&redirect_uri=${@environment.getProperty('oauth.kakao.url.redirect-url')}&response_type=code|">
     <img th:src="@{/image/kakao_login_button.png}" src="/image/kakao_login_button.png" alt="카카오 로그인 버튼" width="183" height="45">
 </a>
 <br />
 <br />
-<a th:href="|https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=${@environment.getProperty('naver.client_id')}&state=${@environment.getProperty('naver.client_secret')}&redirect_uri=${@environment.getProperty('naver.redirect_url')}|">
+<a th:href="|https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=${@environment.getProperty('oauth.naver.client-id')}&state=${@environment.getProperty('oauth.naver.client-secret')}&redirect_uri=${@environment.getProperty('oauth.naver.url.redirect-url')}|">
     <img th:src="@{/image/naver_login_button.png}" src="/image/naver_login_button.png" alt="네이버 로그인 버튼" width="183" height="45">
 </a>
 </body>
