@@ -11,7 +11,7 @@ import lycoris62.socialLoginApp.oauth.OAuthProvider;
 public class KakaoInfoResponse implements OAuthInfoResponse {
 
     @JsonProperty("id")
-    private Long id;
+    private String id;
 
     @JsonProperty("kakao_account")
     private KakaoAccount kakaoAccount;
@@ -30,7 +30,7 @@ public class KakaoInfoResponse implements OAuthInfoResponse {
     }
 
     @Override
-    public Long getId() {
+    public String getOauthId() {
         return id;
     }
 
