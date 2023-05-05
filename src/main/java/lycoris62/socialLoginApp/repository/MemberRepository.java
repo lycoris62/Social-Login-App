@@ -33,6 +33,7 @@ public class MemberRepository {
     }
 
     public Optional<Long> save(MemberDto memberDto) {
+        memberDto.setMemberId(sequence++);
         store.put(memberDto.getMemberId(), memberDto);
         return memberDto.getMemberId().describeConstable();
     }
