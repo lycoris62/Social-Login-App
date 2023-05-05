@@ -19,13 +19,20 @@ public class MemberRepository {
 
     @PostConstruct
     private void createExample() {
-        store.put(sequence, MemberDto.builder().memberId(sequence++).nickname("member0").profileImageUrl("example0.com").build());
-        store.put(sequence, MemberDto.builder().memberId(sequence++).nickname("member1").profileImageUrl("example1.com").build());
-        store.put(sequence, MemberDto.builder().memberId(sequence++).nickname("member2").profileImageUrl("example2.com").build());
+        store.put(sequence, MemberDto.builder().memberId(sequence++).oauthId("").nickname("member0").profileImageUrl("example0.com").build());
+        store.put(sequence, MemberDto.builder().memberId(sequence++).oauthId("").nickname("member1").profileImageUrl("example1.com").build());
+        store.put(sequence, MemberDto.builder().memberId(sequence++).oauthId("").nickname("member2").profileImageUrl("example2.com").build());
     }
 
-    public Optional<MemberDto> findById(long memberId) {
+    public Optional<MemberDto> findById(Long memberId) {
         return Optional.ofNullable(store.get(memberId));
+    }
+
+    public Optional<MemberDto> findByOauthId(String oauthId) {
+        for (MemberDto memberDto : store.values()) {
+            if (memberDto.getOauthId() != null && memberDto.getOauthId().equals(oauthId)) return Optional.of(memberDto);
+        }
+        return Optional.empty();
     }
 
     public Optional<List<MemberDto>> findAll() {

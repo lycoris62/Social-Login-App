@@ -28,6 +28,8 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
                 "/api/v1/user/login",
                 "/api/v1/test/generateToken",
                 "/",
+                "/login/kakao",
+                "/login/naver",
                 "/css/bootstrap.min.css",
                 "/image/naver_login_button.png",
                 "/image/kakao_login_button.png");

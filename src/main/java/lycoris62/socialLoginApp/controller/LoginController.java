@@ -27,20 +27,24 @@ public class LoginController {
         return "index";
     }
 
+    @ResponseBody
     @RequestMapping("/login/kakao")
     public String loginKakao(@RequestParam String code, Model model) {
         KakaoLoginParams params = new KakaoLoginParams(code);
-        MemberDto member = loginService.login(params);
-        model.addAttribute("user", member);
-        return "profile";
+        return loginService.loginToken(params);
+//        MemberDto member = loginService.login(params);
+//        model.addAttribute("user", member);
+//        return "profile";
     }
 
+    @ResponseBody
     @RequestMapping("/login/naver")
     public String loginNaver(@RequestParam String code, Model model) {
         NaverLoginParams params = new NaverLoginParams(code);
-        MemberDto member = loginService.login(params);
-        model.addAttribute("user", member);
-        return "profile";
+        return loginService.loginToken(params);
+//        MemberDto member = loginService.login(params);
+//        model.addAttribute("user", member);
+//        return "profile";
     }
 
     @PostMapping("/api/v1/test/generateToken")
