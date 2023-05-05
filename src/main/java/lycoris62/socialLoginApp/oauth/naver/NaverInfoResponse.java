@@ -16,8 +16,14 @@ public class NaverInfoResponse implements OAuthInfoResponse {
     @Getter
     @JsonIgnoreProperties(ignoreUnknown = true)
     static class Response {
+        private long id;
         private String nickname;
         private String profile_image;
+    }
+
+    @Override
+    public Long getId() {
+        return response.id;
     }
 
     @Override
