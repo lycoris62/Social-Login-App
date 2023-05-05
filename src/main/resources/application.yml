@@ -12,3 +12,6 @@ oauth:
       auth: https://nid.naver.com
       api: https://openapi.naver.com
       redirect-url: ${NAVER_REDIRECT_URL}
+
+jwt:
+  secret: ${secretKey}
