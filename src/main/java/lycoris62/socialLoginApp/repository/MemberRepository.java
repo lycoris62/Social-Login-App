@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @Slf4j
 @Repository
@@ -23,17 +24,17 @@ public class MemberRepository {
         store.put(sequence, MemberDto.builder().memberId(sequence++).nickname("member2").profileImageUrl("example2.com").build());
     }
 
-    public MemberDto findById(long memberId) {
-        return store.get(memberId);
+    public Optional<MemberDto> findById(long memberId) {
+        return Optional.ofNullable(store.get(memberId));
     }
 
-    public List<MemberDto> findAll() {
-        return store.values().stream().toList();
+    public Optional<List<MemberDto>> findAll() {
+        return Optional.of(store.values().stream().toList());
     }
 
-    public long save(MemberDto memberDto) {
+    public Optional<Long> save(MemberDto memberDto) {
         store.put(memberDto.getMemberId(), memberDto);
-        return memberDto.getMemberId();
+        return memberDto.getMemberId().describeConstable();
     }
 
 }
