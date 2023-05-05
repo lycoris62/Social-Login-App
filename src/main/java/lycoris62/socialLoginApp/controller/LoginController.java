@@ -6,17 +6,20 @@ import lycoris62.socialLoginApp.dto.MemberDto;
 import lycoris62.socialLoginApp.oauth.kakao.KakaoLoginParams;
 import lycoris62.socialLoginApp.oauth.naver.NaverLoginParams;
 import lycoris62.socialLoginApp.service.LoginService;
+import lycoris62.socialLoginApp.utils.JwtUtil;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 @Slf4j
 @Controller
 @RequiredArgsConstructor
 public class LoginController {
 
+    @Value("${jwt.secret}")
+    private String secretKey;
     private final LoginService loginService;
 
     @GetMapping("/")
@@ -38,5 +41,12 @@ public class LoginController {
         MemberDto member = loginService.login(params);
         model.addAttribute("user", member);
         return "profile";
+    }
+
+    @PostMapping("/api/v1/test/generateToken")
+    public ResponseEntity<String> getToken(@RequestBody MemberDto memberDto) {
+        log.info("member={}", memberDto);
+        String token = JwtUtil.createToken(secretKey, memberDto);
+        return ResponseEntity.ok(token);
     }
 }

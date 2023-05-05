@@ -1,27 +1,24 @@
 package lycoris62.socialLoginApp.utils;
 
+import lycoris62.socialLoginApp.dto.MemberDto;
 import org.junit.jupiter.api.Test;
-import java.util.Map;
-import java.util.Set;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 class JwtUtilTest {
 
     @Test
-    void createTokenAndVerifyClaims() {
-        JwtUtil jwtUtil = new JwtUtil("kimjaeyunGodBlessJaeyunHiJaeyunNiceToMeetYou");
+    void createTokenAndVerifyMember() {
+        String secretKey = "helloWorldMyNameIsJiGuAndMyFriendIsSunNiceToMeetYou";
+        MemberDto member = MemberDto.builder()
+                .memberId(1L)
+                .nickname("kimjaeyun")
+                .profileImageUrl("example.com")
+                .build();
 
-        Map<String, Object> payloads = Map.of(
-                "key11", "value11",
-                "key22", "value22");
-        Set<Map.Entry<String, Object>> entries = payloads.entrySet();
+        String token = JwtUtil.createToken(secretKey, member);
+        Long memberId = JwtUtil.getUserIdFromToken(secretKey, token);
 
-        String token = jwtUtil.createToken(payloads);
-        Map<String, Object> claims = jwtUtil.verifyJWT(token);
-
-        entries.forEach(entry -> assertThat(claims)
-                .hasSize(payloads.size() + 2)
-                .containsEntry(entry.getKey(), entry.getValue()));
+        assertThat(memberId).isEqualTo(member.getMemberId());
     }
 }
