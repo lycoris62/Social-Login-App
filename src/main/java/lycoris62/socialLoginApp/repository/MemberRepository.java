@@ -45,10 +45,10 @@ public class MemberRepository {
         return Optional.of(store.values().stream().toList());
     }
 
-    public Optional<Long> save(MemberDto memberDto) {
+    public Optional<MemberDto> save(MemberDto memberDto) {
         memberDto.setMemberId(sequence++);
         store.put(memberDto.getMemberId(), memberDto);
-        return memberDto.getMemberId().describeConstable();
+        return Optional.of(memberDto);
     }
 
 }
