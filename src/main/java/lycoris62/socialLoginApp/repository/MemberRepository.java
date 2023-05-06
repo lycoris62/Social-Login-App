@@ -19,9 +19,15 @@ public class MemberRepository {
 
     @PostConstruct
     private void createExample() {
-        store.put(sequence, MemberDto.builder().memberId(sequence++).oauthId("").nickname("member0").profileImageUrl("example0.com").build());
-        store.put(sequence, MemberDto.builder().memberId(sequence++).oauthId("").nickname("member1").profileImageUrl("example1.com").build());
-        store.put(sequence, MemberDto.builder().memberId(sequence++).oauthId("").nickname("member2").profileImageUrl("example2.com").build());
+        for (int i = 0; i < 3; i++) {
+            MemberDto testMember = MemberDto.builder()
+                    .memberId(sequence++)
+                    .oauthId("")
+                    .nickname("member" + i)
+                    .profileImageUrl("example" + i + ".com")
+                    .build();
+            store.put(sequence, testMember);
+        }
     }
 
     public Optional<MemberDto> findById(Long memberId) {

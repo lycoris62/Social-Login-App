@@ -51,8 +51,8 @@ public class LoginService {
                 .nickname(oAuthInfoResponse.getName())
                 .profileImageUrl(oAuthInfoResponse.getProfileImageUrl())
                 .build();
-        Optional<Long> savedMember = memberRepository.save(member);
-        return savedMember.orElseThrow();
+        Optional<MemberDto> savedMember = memberRepository.save(member);
+        return savedMember.orElseThrow().getMemberId();
     }
 
 }
