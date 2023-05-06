@@ -23,8 +23,29 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, @NonNull HttpServletResponse response, @NonNull FilterChain filterChain) throws ServletException, IOException {
-        // 토큰이 필요하지 않은 API URL 구성
-        List<String> list = Arrays.asList(
+        if (getWhiteUrlList().contains(request.getRequestURI())) {
+            filterChain.doFilter(request, response);
+            return;
+        }
+        String header = request.getHeader("Authorization");
+        sendExceptionResponse(response, header);
+    }
+
+    private void sendExceptionResponse(HttpServletResponse response, String header) throws IOException {
+        if (header == null || header.equalsIgnoreCase("")) {
+            responseExceptionWithMessage(response, new Exception("Token is null"));
+        }
+        String token = JwtUtil.getTokenFromHeader(header);
+        if (!JwtUtil.isValidToken(secretKey, token)) {
+            responseExceptionWithMessage(response, new Exception("Token is invalid"));
+        }
+        if (JwtUtil.getUserIdFromToken(secretKey, token) == null) {
+            responseExceptionWithMessage(response, new Exception("Token isn't memberId"));
+        }
+    }
+
+    private static List<String> getWhiteUrlList() {
+        return Arrays.asList(
                 "/api/v1/user/login",
                 "/api/v1/test/generateToken",
                 "/",
@@ -33,41 +54,14 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
                 "/css/bootstrap.min.css",
                 "/image/naver_login_button.png",
                 "/image/kakao_login_button.png");
+    }
 
-        log.info("req uri={}", request.getRequestURI());
-
-        // 토큰이 필요하지 않은 API URL 로직 처리 없이 다음 필터로 이동
-        if (list.contains(request.getRequestURI())) {
-            filterChain.doFilter(request, response);
-            return;
-        }
-
-        // 클라에서 API 요청할 떄 Header 확인
-        String header = request.getHeader("Authorization");
-        log.info("header={}", header);
-        log.info("secretKey={}", secretKey);
-
-        try {
-            if (header == null || header.equalsIgnoreCase("")) {
-                throw new Exception("Token is null");
-            }
-
-            String token = JwtUtil.getTokenFromHeader(header);
-            log.info("token={}", token);
-
-            if (!JwtUtil.isValidToken(secretKey, token)) {
-                throw new Exception("Token is invalid");
-            }
-            if (JwtUtil.getUserIdFromToken(secretKey, token) == null) {
-                throw new Exception("Token isn't memberId");
-            }
-        } catch (Exception e) {
-            response.setCharacterEncoding("UTF-8");
-            response.setContentType("application/json");
-            PrintWriter writer = response.getWriter();
-            writer.print(e.getMessage());
-            writer.flush();
-            writer.close();
-        }
+    private void responseExceptionWithMessage(HttpServletResponse response, Exception e) throws IOException {
+        response.setCharacterEncoding("UTF-8");
+        response.setContentType("application/json");
+        PrintWriter writer = response.getWriter();
+        writer.print(e.getMessage());
+        writer.flush();
+        writer.close();
     }
 }
