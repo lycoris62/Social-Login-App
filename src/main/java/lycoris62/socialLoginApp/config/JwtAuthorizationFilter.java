@@ -48,24 +48,18 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
         log.info("secretKey={}", secretKey);
 
         try {
-            if (header != null && !header.equalsIgnoreCase("")) {
-                String token = JwtUtil.getTokenFromHeader(header);
-                log.info("token={}", token);
-
-                if (JwtUtil.isValidToken(secretKey, token)) {
-                    Long memberId = JwtUtil.getUserIdFromToken(secretKey, token);
-                    log.info("memberId={}", memberId);
-
-                    if (memberId != null) {
-                        filterChain.doFilter(request, response);
-                    } else {
-                        throw new Exception("Token isn't memberId");
-                    }
-                } else {
-                    throw new Exception("Token is invalid");
-                }
-            } else {
+            if (header == null || header.equalsIgnoreCase("")) {
                 throw new Exception("Token is null");
+            }
+
+            String token = JwtUtil.getTokenFromHeader(header);
+            log.info("token={}", token);
+
+            if (!JwtUtil.isValidToken(secretKey, token)) {
+                throw new Exception("Token is invalid");
+            }
+            if (JwtUtil.getUserIdFromToken(secretKey, token) == null) {
+                throw new Exception("Token isn't memberId");
             }
         } catch (Exception e) {
             response.setCharacterEncoding("UTF-8");
