@@ -33,8 +33,9 @@ public class WebSecurityConfig {
         http.csrf().disable();
         http.formLogin().disable();
         http.authorizeHttpRequests((authz) -> authz.anyRequest().permitAll()); // 토큰 활용시 모든 요청에 대해 인가
-        http.addFilterBefore(jwtAuthorizationFilter(), BasicAuthenticationFilter.class);
-        http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+        // 테스트할 때만 밑 2개 꺼두기
+//        http.addFilterBefore(jwtAuthorizationFilter(), BasicAuthenticationFilter.class);
+//        http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         return http.build();
     }
 
