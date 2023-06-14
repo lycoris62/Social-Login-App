@@ -51,4 +51,7 @@ public class MemberRepository {
         return Optional.of(memberDto);
     }
 
+    public void clear() {
+        store.clear();
+    }
 }
