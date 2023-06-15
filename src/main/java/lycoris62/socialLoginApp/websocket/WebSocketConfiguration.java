@@ -17,7 +17,7 @@ public class WebSocketConfiguration implements WebSocketConfigurer {
     }
 
     @Bean
-    public org.springframework.web.socket.WebSocketHandler signalingSocketHandler() {
+    public WebSocketHandler signalingSocketHandler() {
         return new WebSocketHandler();
     }
 }
