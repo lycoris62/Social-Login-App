@@ -14,7 +14,7 @@ on:
     branches: [ "main" ]
 
 permissions:
-  contents: write
+  contents: read
 
 jobs:
   build:
@@ -26,17 +26,6 @@ jobs:
       with:
         java-version: '17'
         distribution: 'zulu'
-        
-    # 추가
-    - name: Cache Gradle packages
-      uses: actions/cache@v2
-      with:
-        path: |
-          ~/.gradle/caches
-          ~/.gradle/wrapper
-        key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
-        restore-keys: |
-          ${{ runner.os }}-gradle-
     
     # Gradle wrapper 파일 실행 권한주기
     - name: Grant execute permission for gradlew
@@ -52,10 +41,3 @@ jobs:
       with:
         files: build/test-results/**/*.xml
         
-    - name: Cleanup Gradle Cache
-      # Remove some files from the Gradle cache, so they aren't cached by GitHub Actions.
-      # Restoring these files from a GitHub Actions cache might cause problems for future builds.
-      if: ${{ always() }}
-      run: |
-        rm -f ~/.gradle/caches/modules-2/modules-2.lock
-        rm -f ~/.gradle/caches/modules-2/gc.properties
