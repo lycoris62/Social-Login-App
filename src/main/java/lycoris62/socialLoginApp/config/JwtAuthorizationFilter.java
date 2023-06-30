@@ -4,6 +4,7 @@ import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.Part;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -13,7 +14,9 @@ import org.springframework.web.filter.OncePerRequestFilter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Arrays;
+import java.util.Enumeration;
 import java.util.List;
+import java.util.Map;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -23,12 +26,18 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, @NonNull HttpServletResponse response, @NonNull FilterChain filterChain) throws ServletException, IOException {
+
         if (getWhiteUrlList().contains(request.getRequestURI())) {
             filterChain.doFilter(request, response);
             return;
         }
+        final String token = request.getParameter("token");
+        log.info("token={}", token);
         String header = request.getHeader("Authorization");
+        log.info("header={}", header);
         sendExceptionResponse(response, header);
+
+        filterChain.doFilter(request, response);
     }
 
     private void sendExceptionResponse(HttpServletResponse response, String header) throws IOException {

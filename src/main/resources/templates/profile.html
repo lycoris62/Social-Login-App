@@ -6,10 +6,14 @@
     <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet"/>
 </head>
 <body>
-<div class="card" style="width: 18rem;" th:object="${user}">
-    <img th:src="*{profileImageUrl}" class="card-img-top" alt="유저 프로필 사진" src="/static/image/kakao_login_button.png">
-    <div class="card-body">
-        <h5 class="card-text" th:text="*{nickname}">Card title</h5>
+<div class="container">
+    <a class="btn btn-primary" type="button" th:href="@{/}">Home</a>
+    <div class="card" style="width: 18rem;" th:object="${user}">
+        <img th:src="*{profileImageUrl}" class="card-img-top" alt="유저 프로필 사진"
+             src="/static/image/kakao_login_button.png">
+        <div class="card-body">
+            <h5 class="card-text" th:text="*{nickname}">Card title</h5>
+        </div>
     </div>
 </div>
 </body>

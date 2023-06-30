@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="kr" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Post</title>
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet"/>
+</head>
+<body>
+<div class="container my-5">
+    <a class="btn btn-primary" type="button" th:href="@{/}">Home</a>
+    <div class=" d-flex justify-content-center">
+    <div class="card w-75 mt-5" th:object="${post}">
+        <div class="card-body">
+            <h5 class="card-title" th:text="*{title}">Card title</h5>
+            <h6 class="card-subtitle mb-2 text-body-secondary" th:text="*{user.getNickname()}">Card subtitle</h6>
+            <p class="card-text" th:text="*{content}">Some quick example text to build on the card title and make up the
+                bulk of the card's content.</p>
+            <button  class="btn btn-primary like-button" th:text="*{likes}">0</button>
+            <input class="user-id" type="hidden" th:value="1"/>
+            <input class="post-id" type="hidden" th:value="*{id}"/>
+        </div>
+    </div>
+    </div>
+</div>
+<script src="/js/post.js"></script>
+</body>
+</html>

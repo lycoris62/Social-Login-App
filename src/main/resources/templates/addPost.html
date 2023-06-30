@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="kr" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>AddPost</title>
+  <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet"/>
+</head>
+<body>
+<div class="container my-5 mx-auto">
+  <form th:action="@{/post}"  th:object="${addPostRequest}" method="post" >
+    <table class="table">
+      <tbody>
+      <tr>
+        <td>제목</td>
+        <td><input type="text" th:field="*{title}"></td>
+      </tr>
+      <tr>
+        <td>작성자</td>
+        <td><input type="text" th:field="*{userId}" th:value="${1}" value="1" readonly></td>
+      </tr>
+      <tr style="height: 300px;">
+        <td>내용</td>
+        <td><input type="text" th:field="*{content}"></td>
+      </tr>
+      </tbody>
+      <button class="btn btn-primary" type="submit">등록</button>
+    </table>
+  </form>
+</div>
+</body>
+</html>

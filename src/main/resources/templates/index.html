@@ -6,13 +6,31 @@
     <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet"/>
 </head>
 <body>
-<a th:href="|https://kauth.kakao.com/oauth/authorize?client_id=${@environment.getProperty('oauth.kakao.client-id')}&redirect_uri=${@environment.getProperty('oauth.kakao.url.redirect-url')}&response_type=code|">
-    <img th:src="@{/image/kakao_login_button.png}" src="/image/kakao_login_button.png" alt="카카오 로그인 버튼" width="183" height="45">
-</a>
-<br />
-<br />
-<a th:href="|https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=${@environment.getProperty('oauth.naver.client-id')}&state=${@environment.getProperty('oauth.naver.client-secret')}&redirect_uri=${@environment.getProperty('oauth.naver.url.redirect-url')}|">
-    <img th:src="@{/image/naver_login_button.png}" src="/image/naver_login_button.png" alt="네이버 로그인 버튼" width="183" height="45">
-</a>
+<div class="container mx-auto my-5 px-0">
+    <div class="d-flex justify-content-between">
+        <a class="btn btn-primary" type="button" th:href="@{/addPostForm}">글작성</a>
+        <a class="btn btn-primary" type="button" th:href="@{/login}">Login</a>
+    </div>
+    <table class="table px-0 m-0">
+        <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">title</th>
+            <th scope="col">author</th>
+            <th scope="col">likes</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="post : ${postList}">
+            <th scope="row" th:text="${post.id}"></th>
+            <td>
+                <a th:href="@{/post/{postId}(postId=${post.id})}" th:text="${post.title}"></a>
+            </td>
+            <td th:text="${post.nickname}"></td>
+            <td th:text="${post.likes}"></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
 </body>
 </html>
